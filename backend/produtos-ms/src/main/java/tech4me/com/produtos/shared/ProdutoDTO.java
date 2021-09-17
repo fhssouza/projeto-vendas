@@ -1,16 +1,16 @@
 package tech4me.com.produtos.shared;
 
 public class ProdutoDTO {
-    private Integer codigo;
+    private String id;
     private String nome;
     private Double valor;
     private Integer quantidadeEstoque;
     
-    public Integer getCodigo() {
-        return codigo;
+    public String getId() {
+        return id;
     }
-    public void setCodigo(Integer codigo) {
-        this.codigo = codigo;
+    public void setId(String id) {
+        this.id = id;
     }
     public String getNome() {
         return nome;
@@ -30,7 +30,4 @@ public class ProdutoDTO {
     public void setQuantidadeEstoque(Integer quantidadeEstoque) {
         this.quantidadeEstoque = quantidadeEstoque;
     }
-
-    
-
 }

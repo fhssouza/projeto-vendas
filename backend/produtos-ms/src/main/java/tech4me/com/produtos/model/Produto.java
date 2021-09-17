@@ -6,16 +6,16 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document
 public class Produto {
     @Id
-    private Integer codigo;
+    private String id;
     private String nome;
     private Double valor;
     private Integer quantidadeEstoque;
-
-    public Integer getCodigo() {
-        return codigo;
+    
+    public String getId() {
+        return id;
     }
-    public void setCodigo(Integer codigo) {
-        this.codigo = codigo;
+    public void setId(String id) {
+        this.id = id;
     }
     public String getNome() {
         return nome;
@@ -35,6 +35,4 @@ public class Produto {
     public void setQuantidadeEstoque(Integer quantidadeEstoque) {
         this.quantidadeEstoque = quantidadeEstoque;
     }
-  
-   
 }
