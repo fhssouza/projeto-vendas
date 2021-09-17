@@ -32,4 +32,11 @@ public class ProdutoServiceImpl implements ProdutoService {
         salvarProduto = repositorio.save(salvarProduto);
         return mapper.map(salvarProduto, ProdutoDTO.class);
     }
+
+    @Override
+    public void excluirProduto(String id) {
+        repositorio.deleteById(id);
+    }
+
+    
 }

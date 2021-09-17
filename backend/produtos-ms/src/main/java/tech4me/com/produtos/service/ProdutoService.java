@@ -8,6 +8,6 @@ public interface ProdutoService {
 
     List<ProdutoDTO> listarProdutos();
     ProdutoDTO cadastrarProduto(ProdutoDTO produto);
-    
+    void excluirProduto(String id);
     
 }
