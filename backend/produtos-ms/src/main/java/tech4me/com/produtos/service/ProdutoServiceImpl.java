@@ -1,6 +1,7 @@
 package tech4me.com.produtos.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -38,5 +39,18 @@ public class ProdutoServiceImpl implements ProdutoService {
         repositorio.deleteById(id);
     }
 
-    
+    @Override
+    public Optional<ProdutoDTO> atualizarProdutoPorId(String id, ProdutoDTO produto) {
+        ModelMapper mapper = new ModelMapper();
+        Optional<Produto> p = repositorio.findById(id);
+        Produto salvarProduto = mapper.map(produto, Produto.class);
+
+        if (p.isPresent()){
+            salvarProduto.setId(id);
+            salvarProduto = repositorio.save(salvarProduto);
+            return Optional.of(mapper.map(salvarProduto, ProdutoDTO.class));
+        }
+        return Optional.empty();
+    }
 }
+
