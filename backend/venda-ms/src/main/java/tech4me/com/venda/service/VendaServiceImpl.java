@@ -24,6 +24,14 @@ public class VendaServiceImpl implements VendaService {
         .map(venda -> new ModelMapper().map(venda, VendaDTO.class))
         .collect(Collectors.toList());
     }
-    
-    
+
+    @Override
+    public VendaDTO cadastrarVenda(VendaDTO venda) {
+        ModelMapper mapper = new ModelMapper();
+        Venda salvarVenda = mapper.map(venda, Venda.class);
+        salvarVenda = repo.save(salvarVenda);
+        return mapper.map(salvarVenda, VendaDTO.class);
+    }
 }
+
+

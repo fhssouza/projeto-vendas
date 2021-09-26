@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,6 +24,13 @@ public class VendaController {
     public ResponseEntity<List<VendaDTO>> listarVendas(){
         return new ResponseEntity<>(service.obtertodos(), HttpStatus.ACCEPTED);
     }
+
+    @PostMapping
+    public ResponseEntity<VendaDTO> cadastrarVenda(@RequestBody VendaDTO venda){
+        return new ResponseEntity<>(service.cadastrarVenda(venda), HttpStatus.CREATED);
+    }
 }
+
+
 
 

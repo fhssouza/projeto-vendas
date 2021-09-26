@@ -6,4 +6,5 @@ import tech4me.com.venda.shared.VendaDTO;
 
 public interface VendaService {
     List<VendaDTO> obtertodos();
+    VendaDTO cadastrarVenda(VendaDTO venda);
 }

@@ -1,7 +1,5 @@
 package tech4me.com.venda.model;
 
-import java.time.LocalDate;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -9,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Venda {
     @Id
     private String id;
-    private LocalDate data;
+    private String data;
     private String produto;
     private Integer quantidade;
     private Double valor;
@@ -21,10 +19,10 @@ public class Venda {
         this.id = id;
     }
 
-    public LocalDate getData() {
+    public String getData() {
         return data;
     }
-    public void setData(LocalDate data) {
+    public void setData(String data) {
         this.data = data;
     }
     public String getProduto() {
