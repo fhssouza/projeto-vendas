@@ -1,16 +1,21 @@
 package tech4me.com.venda.controller;
 
 import java.util.List;
+import java.util.Optional;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import tech4me.com.venda.model.Venda;
 import tech4me.com.venda.service.VendaService;
 import tech4me.com.venda.shared.VendaDTO;
 
@@ -28,6 +33,18 @@ public class VendaController {
     @PostMapping
     public ResponseEntity<VendaDTO> cadastrarVenda(@RequestBody VendaDTO venda){
         return new ResponseEntity<>(service.cadastrarVenda(venda), HttpStatus.CREATED);
+    }
+
+    @PutMapping(value="/{id}")
+    public ResponseEntity<VendaDTO> atualizarVendaPorId(@PathVariable String id, @RequestBody Venda venda){
+        ModelMapper mapper = new ModelMapper();
+        VendaDTO dto = mapper.map(venda, VendaDTO.class);
+        Optional<VendaDTO> vendas = service.atualizarVendaPorId(id, dto);
+
+        if (vendas.isPresent()){
+            return new ResponseEntity<>(vendas.get(), HttpStatus.OK);
+        }
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
     }
 }
 

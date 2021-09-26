@@ -1,6 +1,7 @@
 package tech4me.com.venda.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -32,6 +33,22 @@ public class VendaServiceImpl implements VendaService {
         salvarVenda = repo.save(salvarVenda);
         return mapper.map(salvarVenda, VendaDTO.class);
     }
+
+    @Override
+    public Optional<VendaDTO> atualizarVendaPorId(String id, VendaDTO venda) {
+        ModelMapper mapper = new ModelMapper();
+        Optional<Venda> vendas = repo.findById(id);
+        Venda salvarVenda = mapper.map(venda, Venda.class);
+
+        if(vendas.isPresent()){
+            salvarVenda.setId(id);
+            salvarVenda = repo.save(salvarVenda);
+            return Optional.of(mapper.map(salvarVenda, VendaDTO.class));
+        }
+        return Optional.empty();
+    }
+
+    
 }
 
 
