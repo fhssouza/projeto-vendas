@@ -48,7 +48,12 @@ public class VendaServiceImpl implements VendaService {
         return Optional.empty();
     }
 
-    
+    @Override
+    public void excluirVenda(String id) {
+        repo.deleteById(id);
+        
+    }
+   
 }
 
 

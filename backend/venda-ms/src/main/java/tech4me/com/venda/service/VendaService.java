@@ -9,5 +9,7 @@ public interface VendaService {
     List<VendaDTO> obtertodos();
     VendaDTO cadastrarVenda(VendaDTO venda);
     Optional<VendaDTO> atualizarVendaPorId(String id, VendaDTO venda);
+    void excluirVenda(String id);
+    
     
 }
