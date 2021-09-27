@@ -5,6 +5,10 @@
 		},
 		{
 			"path": "venda-ms"
+		},
+		{
+			"name": "eureka-server",
+			"path": "eureka-server\\eureka-server"
 		}
 	]
 }
