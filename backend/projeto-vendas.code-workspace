@@ -9,6 +9,10 @@
 		{
 			"name": "eureka-server",
 			"path": "eureka-server\\eureka-server"
+		},
+		{
+			"name": "zuul-server",
+			"path": "zuul-server"
 		}
 	]
 }
