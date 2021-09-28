@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,7 +38,7 @@ public class VendaController {
     } 
 
     @PostMapping
-    public ResponseEntity<VendaModeloResponse> cadastrarVenda(@RequestBody VendaModeloInclusao Venda) {
+    public ResponseEntity<VendaModeloResponse> cadastrarVenda(@RequestBody @Valid VendaModeloInclusao Venda) {
         ModelMapper mapper = new ModelMapper();
         VendaDTO dto = mapper.map(Venda, VendaDTO.class);
         dto = service.cadastrarVenda(dto);

@@ -1,7 +1,12 @@
 package tech4me.com.venda.view.model;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+
 public class VendaModeloInclusao {
     private String data;
+    @NotBlank(message = "O Produto pode estar em branco")
+    @NotEmpty(message = "O Produto é obrigátorio")
     private String produto;
     private Integer quantidade;
     private Double valor;
