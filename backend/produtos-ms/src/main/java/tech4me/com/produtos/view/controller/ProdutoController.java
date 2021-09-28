@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,6 +26,11 @@ import tech4me.com.produtos.shared.ProdutoDTO;
 public class ProdutoController {
     @Autowired
     ProdutoService servico;
+
+    @GetMapping(value="/status")
+    public String statusServico(@Value("${local.server.port}") String porta){
+        return String.format("Serviço ativo e executado na porta %s", porta);
+    }
 
     @GetMapping
     public ResponseEntity<List<ProdutoDTO>> listarProdutos(){
