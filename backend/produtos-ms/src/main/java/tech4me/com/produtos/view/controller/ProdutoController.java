@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import tech4me.com.produtos.model.Produto;
 import tech4me.com.produtos.service.ProdutoService;
 import tech4me.com.produtos.shared.ProdutoDTO;
+import tech4me.com.produtos.view.model.ProdutoModeloResponseDetalhes;
 
 @RestController
 @RequestMapping("api/produtos")
@@ -35,6 +36,20 @@ public class ProdutoController {
     @GetMapping
     public ResponseEntity<List<ProdutoDTO>> listarProdutos(){
         return new ResponseEntity<>(servico.listarProdutos(), HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping(value="/{id}")
+    public ResponseEntity<ProdutoModeloResponseDetalhes> obterPorId(@PathVariable String id) {
+        Optional<ProdutoDTO> produto = servico.obterPorId(id);
+
+        if(produto.isPresent()) {
+            return new ResponseEntity<>(
+                new ModelMapper().map(produto.get(), ProdutoModeloResponseDetalhes.class), 
+                HttpStatus.OK
+            );
+        }
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PostMapping

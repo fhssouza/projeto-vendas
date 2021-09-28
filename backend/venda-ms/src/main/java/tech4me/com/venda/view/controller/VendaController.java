@@ -1,4 +1,4 @@
-package tech4me.com.venda.controller;
+package tech4me.com.venda.view.controller;
 
 import java.util.List;
 import java.util.Optional;

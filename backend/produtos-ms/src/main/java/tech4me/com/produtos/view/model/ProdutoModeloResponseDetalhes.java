@@ -1,20 +1,16 @@
-package tech4me.com.produtos.shared;
+package tech4me.com.produtos.view.model;
 
 import java.util.List;
 
-public class ProdutoDTO {
+import tech4me.com.produtos.shared.Venda;
+
+public class ProdutoModeloResponseDetalhes {
     private String id;
     private String nome;
     private Double valor;
     private Integer quantidadeEstoque;
     private List<Venda> venda;
-
-    public List<Venda> getVenda() {
-        return venda;
-    }
-    public void setVenda(List<Venda> venda) {
-        this.venda = venda;
-    }
+    
     public String getId() {
         return id;
     }
@@ -39,4 +35,12 @@ public class ProdutoDTO {
     public void setQuantidadeEstoque(Integer quantidadeEstoque) {
         this.quantidadeEstoque = quantidadeEstoque;
     }
+    public List<Venda> getVenda() {
+        return venda;
+    }
+    public void setVenda(List<Venda> venda) {
+        this.venda = venda;
+    }
+
+    
 }

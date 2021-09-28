@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import tech4me.com.produtos.clienteHTPP.VendasFeignClient;
 import tech4me.com.produtos.model.Produto;
 import tech4me.com.produtos.repository.ProdutoRepository;
 import tech4me.com.produtos.shared.ProdutoDTO;
@@ -16,6 +17,23 @@ import tech4me.com.produtos.shared.ProdutoDTO;
 public class ProdutoServiceImpl implements ProdutoService {
     @Autowired
     ProdutoRepository repositorio;
+
+    @Autowired
+    private VendasFeignClient vendasMsClient;
+
+    @Override
+    public Optional<ProdutoDTO> obterPorId(String id) {
+       Optional<Produto> produto = repositorio.findById(id);
+
+        
+       if(produto.isPresent()) {
+           ProdutoDTO dto = new ModelMapper().map(produto.get(), ProdutoDTO.class);
+           dto.setVenda(vendasMsClient.obterVendas(id));
+           return Optional.of(dto);
+       }
+
+       return Optional.empty();
+    }
 
     @Override
     public List<ProdutoDTO> listarProdutos() {
