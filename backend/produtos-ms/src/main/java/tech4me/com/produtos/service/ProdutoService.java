@@ -6,10 +6,9 @@ import java.util.Optional;
 import tech4me.com.produtos.shared.ProdutoDTO;
 
 public interface ProdutoService {
-
+    ProdutoDTO cadastrarProduto(ProdutoDTO produto);
     List<ProdutoDTO> listarProdutos();
     Optional<ProdutoDTO> obterPorId(String id);
-    ProdutoDTO cadastrarProduto(ProdutoDTO produto);
     void excluirProduto(String id);
     Optional<ProdutoDTO> atualizarProdutoPorId(String id, ProdutoDTO produto);
 }

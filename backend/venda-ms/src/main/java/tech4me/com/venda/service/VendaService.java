@@ -6,10 +6,10 @@ import java.util.Optional;
 import tech4me.com.venda.shared.VendaDTO;
 
 public interface VendaService {
-    List<VendaDTO> obtertodos();
     VendaDTO cadastrarVenda(VendaDTO venda);
+    List<VendaDTO> obtertodos();
+    Optional<VendaDTO> obterPorId(String id);
+    List<VendaDTO> obterPorProduto(String produto);
     Optional<VendaDTO> atualizarVendaPorId(String id, VendaDTO venda);
     void excluirVenda(String id);
-    
-    
 }

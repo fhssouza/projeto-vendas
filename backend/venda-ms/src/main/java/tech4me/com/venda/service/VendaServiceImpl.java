@@ -18,6 +18,14 @@ public class VendaServiceImpl implements VendaService {
     private VendaRepository repo;
 
     @Override
+    public VendaDTO cadastrarVenda(VendaDTO venda) {
+        ModelMapper mapper = new ModelMapper();
+        Venda salvarVenda = mapper.map(venda, Venda.class);
+        salvarVenda = repo.save(salvarVenda);
+        return mapper.map(salvarVenda, VendaDTO.class);
+    }
+
+    @Override
     public List<VendaDTO> obtertodos() {
         List<Venda> vendas = repo.findAll();
         
@@ -27,11 +35,22 @@ public class VendaServiceImpl implements VendaService {
     }
 
     @Override
-    public VendaDTO cadastrarVenda(VendaDTO venda) {
-        ModelMapper mapper = new ModelMapper();
-        Venda salvarVenda = mapper.map(venda, Venda.class);
-        salvarVenda = repo.save(salvarVenda);
-        return mapper.map(salvarVenda, VendaDTO.class);
+    public Optional<VendaDTO> obterPorId(String id) {
+        Optional<Venda> venda = repo.findById(id);
+
+        if(venda.isPresent()){
+            return Optional.of(new ModelMapper().map(venda.get(), VendaDTO.class));
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public List<VendaDTO> obterPorProduto(String produto) {
+        List<Venda> vendas = repo.findByProduto(produto);
+
+        return vendas.stream()
+            .map(venda -> new ModelMapper().map(venda, VendaDTO.class))
+            .collect(Collectors.toList());
     }
 
     @Override

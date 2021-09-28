@@ -2,6 +2,7 @@ package tech4me.com.produtos.view.controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 import tech4me.com.produtos.model.Produto;
 import tech4me.com.produtos.service.ProdutoService;
 import tech4me.com.produtos.shared.ProdutoDTO;
-import tech4me.com.produtos.view.model.ProdutoModeloResponseDetalhes;
+import tech4me.com.produtos.view.model.ProdutoModeloRequest;
+import tech4me.com.produtos.view.model.ProdutoModeloResponse;
 
 @RestController
 @RequestMapping("api/produtos")
@@ -33,28 +35,42 @@ public class ProdutoController {
         return String.format("Serviço ativo e executado na porta %s", porta);
     }
 
+   @PostMapping
+    public ResponseEntity<ProdutoModeloResponse> criarPessoa(@RequestBody ProdutoModeloRequest produto) {
+        ModelMapper mapper = new ModelMapper();
+        ProdutoDTO dto = mapper.map(produto, ProdutoDTO.class);
+        dto = servico.cadastrarProduto(dto);
+        return new ResponseEntity<>(mapper.map(dto, ProdutoModeloResponse.class), HttpStatus.CREATED);
+    }
+
     @GetMapping
-    public ResponseEntity<List<ProdutoDTO>> listarProdutos(){
-        return new ResponseEntity<>(servico.listarProdutos(), HttpStatus.ACCEPTED);
+    public ResponseEntity<List<ProdutoModeloResponse>> obterTodos() {
+        List<ProdutoDTO> dtos = servico.listarProdutos();
+
+        if(dtos.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        ModelMapper mapper = new ModelMapper();
+        List<ProdutoModeloResponse> resp = dtos.stream()
+                    .map(dto -> mapper.map(dto, ProdutoModeloResponse.class))
+                    .collect(Collectors.toList());
+
+        return new ResponseEntity<>(resp, HttpStatus.OK);
     }
 
     @GetMapping(value="/{id}")
-    public ResponseEntity<ProdutoModeloResponseDetalhes> obterPorId(@PathVariable String id) {
+    public ResponseEntity<ProdutoModeloResponse> obterPorId(@PathVariable String id) {
         Optional<ProdutoDTO> produto = servico.obterPorId(id);
 
         if(produto.isPresent()) {
             return new ResponseEntity<>(
-                new ModelMapper().map(produto.get(), ProdutoModeloResponseDetalhes.class), 
+                new ModelMapper().map(produto.get(), ProdutoModeloResponse.class), 
                 HttpStatus.OK
             );
         }
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
-    @PostMapping
-    public ResponseEntity<ProdutoDTO> cadastrarProduto(@RequestBody ProdutoDTO produto){
-        return new ResponseEntity<>(servico.cadastrarProduto(produto), HttpStatus.CREATED);
     }
 
     @DeleteMapping(value="/{id}")
